@@ -1,2 +1,3 @@
-# Face-Recognition
-The source code of face recognition system for hotel security.
+# Face Detection
+
+The source code of face recognition for hotel's security
