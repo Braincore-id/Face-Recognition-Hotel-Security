@@ -1,4 +1,9 @@
 import cv2
+import serial
+
+serialComm = serial.Serial('COM5', 74880)
+serialComm.timeout = 1
+
 
 recognizer = cv2.face.LBPHFaceRecognizer_create()
 recognizer.read('trainer/trainer.yml')
@@ -57,7 +62,10 @@ while True:
 				for i in datainfo:
 					cv2.putText(img, i, (x+w+5,y+tinggi), font, 1, (255,255,255), 2)
 					tinggi += 40
-				cv2.putText(img, str(confidence), (x+5,y+h-5), font, 1, (255,255,0), 1)  
+					e='\n'
+					serialComm.write(str("1").encode())
+					serialComm.write(e.encode()) 
+				cv2.putText(img, str(confidence), (x+5,y+h-5), font, 1, (255,255,0), 1)
 			except:
 				# error load pasenger
 				pass
@@ -69,7 +77,10 @@ while True:
 			cv2.putText(img, datainfo[0], (x+w+5,y+5), font, 1, (255,255,255), 2)
 
 			# confidence info
-			cv2.putText(img, str(confidence), (x+5,y+h-5), font, 1, (255,255,0), 1)  
+			cv2.putText(img, str(confidence), (x+5,y+h-5), font, 1, (255,255,0), 1)
+			e='\n'
+			serialComm.write(str("0").encode())
+			serialComm.write(e.encode()) 
 
 	cv2.imshow('Guest Details',img) 
 	k = cv2.waitKey(10) & 0xff # Press 'ESC' for exiting video
